@@ -4,4 +4,4 @@ from django.views.generic import ListView
 class ListarVeiculos(ListView):
     model = Veiculo
     context_object_name = 'veiculos'
-    template_name = 'veiculos/listar.html'
+    template_name = 'veiculo/listar.html'
