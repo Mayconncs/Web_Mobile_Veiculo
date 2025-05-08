@@ -7,23 +7,71 @@ Veículos Cadastrados - Aluguel de Carros
 
 {% block css_local %}
 <style>
+    .container, .page-header {
+        font-size: 1.2rem;
+    }
+
     .logo {
-        max-width: 150px;
-        margin-bottom: 1rem;
+        max-width: 180px;
+        margin-bottom: 1.5rem;
+    }
+
+    .page-header {
+        padding: 2rem 0;
+    }
+
+    .display-5 {
+        font-size: 2.8rem;
+    }
+
+    .lead {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        font-size: 1.1rem;
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        font-size: 1.0rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .form-control {
+        font-size: 1.1rem; 
+        padding: 0.75rem;
+    }
+
+    .row-cols-md-4 .col {
+        padding: 1rem;
+    }
+
+    .text-muted {
+        font-size: 1.2rem;
+    }
+
+    .alert {
+        font-size: 1.2rem;
+        padding: 1.5rem;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="page-header bg-light">
-    <div class="container mt-4">
+    <div class="container mt-5">
         <h1 class="display-5">Nossos Veículos</h1>
         <p class="lead">Encontre o carro ideal para a sua próxima viagem</p>
     </div>
 </div>
 
-<div class="container mt-4">
-    <div class="row mb-4">
+<div class="container mt-5"> 
+    <div class="row mb-5"> 
         <div class="col-md-6">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Filtrar veículos..." id="vehicleFilter" aria-label="Filtrar veículos">
@@ -36,12 +84,16 @@ Veículos Cadastrados - Aluguel de Carros
     </div>
 
     {% if veiculos %}
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="row row-cols-1 row-cols-md-4 g-5">
             {% for veiculo in veiculos %}
                 <div class="col">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body text-center">
-                            <img src="{% static 'images/LogoCar.png' %}" alt="Car Image" class="logo">
+                            {% if veiculo.foto %}
+                                <img src="{{ veiculo.fotos.url }}" alt="{{ veiculo.get_marca_display }} {{ veiculo.modelo }}" class="vehicle-img">
+                            {% else %}
+                                <div class="sem-imagem">Sem Imagem</div>
+                            {% endif %}
                             <h5 class="card-title">{{ veiculo.get_marca_display }} {{ veiculo.modelo }}</h5>
                             <ul class="list-unstyled">
                                 <li><strong>Ano:</strong> {{ veiculo.ano }}</li>
