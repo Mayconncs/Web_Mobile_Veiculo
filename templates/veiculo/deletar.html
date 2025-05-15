@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Excluir Veículo
+{% endblock %}
+
+{% block css_local %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container mt-1">
+        <div class="text-center mb-5">
+            <h1 class="display-5 text-danger">Excluir Veículo</h1>
+        </div>
+
+        <div class="mx-auto text-center fs-5" style="max-width: 600px;">
+            <p>Tem certeza que deseja excluir o veículo <strong>{{ object.get_marca_display }} {{ object.modelo }}</strong>?</p>
+            
+            <form method="post" class="d-grid gap-3 mt-4">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger fs-5">Sim, excluir</button>
+                <a href="{% url 'listar-veiculos' %}" class="btn btn-secondary fs-5">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

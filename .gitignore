@@ -33,3 +33,5 @@ env/
 
 # Dependências
 Pipfile.lock
+
+veiculo/fotos/

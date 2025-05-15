@@ -5,13 +5,15 @@ from veiculo.models import Veiculo
 from django.views.generic import ListView, CreateView
 from veiculo.forms import FormularioVeiculo
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView, DeleteView
 
-class ListarVeiculos(ListView):
+class ListarVeiculos(LoginRequiredMixin, ListView):
     model = Veiculo
     context_object_name = 'veiculos'
     template_name = 'veiculo/listar.html'
 
-class CriarVeiculos(CreateView):
+class CriarVeiculos(LoginRequiredMixin, CreateView):
     model = Veiculo
     form_class = FormularioVeiculo
     template_name = 'veiculo/novo.html'
@@ -20,10 +22,21 @@ class CriarVeiculos(CreateView):
 class FotoVeiculo(View):
     def get(self, request, arquivo):
         try:
-            veiculo = Veiculo.objects.get(foto='veiculo/fotos/()'.format(arquivo))
+            veiculo = Veiculo.objects.get(foto='veiculo/fotos/{}'.format(arquivo))
             return FileResponse(veiculo.foto)
         except ObjectDoesNotExist:
             raise Http404("Foto não encontrada ou acesso não autorizado")
         except Exception as exception:
             raise exception
+        
+class EditarVeiculos(LoginRequiredMixin, UpdateView):
+    model = Veiculo
+    form_class = FormularioVeiculo
+    template_name = 'veiculo/editar.html'
+    success_url = reverse_lazy('listar-veiculos')
+
+class DeletarVeiculos(LoginRequiredMixin, DeleteView):
+    model = Veiculo
+    template_name = 'veiculo/deletar.html'
+    success_url = reverse_lazy('listar-veiculos')
             

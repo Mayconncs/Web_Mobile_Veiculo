@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'veiculo.apps.VeiculoConfig',
+    'anuncio.apps.AnuncioConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'sistema.urls'
+
+MEDIA_URL = '/fotos/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
 
 TEMPLATES = [
     {
