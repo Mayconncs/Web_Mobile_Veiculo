@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Criar Anúncio
+{% endblock %}
+
+{% block css_local %}
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container mt-1">
+        <div class="text-center mb-5">
+            <h1 class="display-5">Criar Anúncio</h1>
+        </div>
+
+        <div class="mx-auto" style="max-width: 600px;">
+            <form action="{% url 'criar-anuncio' %}" method="post" enctype="multipart/form-data" class="fs-5">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="id_veiculo" class="form-label">Veículo:</label>
+                    {{ form.veiculo }}
+                </div>
+                <div class="mb-4">
+                    <label for="id_preco_diaria" class="form-label">Preço por Dia:</label>
+                    {{ form.preco_diaria }}
+                </div>
+                <div class="mb-4">
+                    <label for="id_descricao" class="form-label">Descrição:</label>
+                    {{ form.descricao }}
+                </div>
+                <div class="mb-4">
+                    <label for="id_status" class="form-label">Status:</label>
+                    {{ form.status }}
+                </div>
+                <button type="submit" class="btn btn-primary w-100 fs-5">Criar Anúncio</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

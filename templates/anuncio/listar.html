@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Veículos Cadastrados - Aluguel de Carros
+Anúncios de Veículos - Aluguel de Carros
 {% endblock %}
 
 {% block css_local %}
@@ -55,18 +55,19 @@ Veículos Cadastrados - Aluguel de Carros
         font-size: 1.2rem;
         padding: 0.7rem;
     }
+
     .form-control:focus {
         border-color: #ced4da;
-        box-shadow: none; 
+        box-shadow: none;
     }
 
     .btn-outline-secondary {
-        border-color: #ced4da; 
-        color: #495057; 
+        border-color: #ced4da;
+        color: #495057;
     }
 
     .btn-outline-secondary:hover {
-        background-color: #f8f9fa; 
+        background-color: #f8f9fa;
         border-color: #adb5bd;
         color: #212529;
     }
@@ -234,7 +235,7 @@ Veículos Cadastrados - Aluguel de Carros
         .form-control {
             font-size: 1.2rem;
             padding: 0.7rem;
-            min-width: 0; 
+            min-width: 0;
         }
 
         .input-group {
@@ -277,51 +278,51 @@ Veículos Cadastrados - Aluguel de Carros
 {% block content %}
 <div class="page-header bg-light">
     <div class="container mt-5">
-        <h1 class="display-5">Nossos Veículos</h1>
-        <p class="lead">Encontre o carro ideal para a sua próxima viagem</p>
+        <h1 class="display-5">Nossos Anúncios</h1>
+        <p class="lead">Confira os veículos disponíveis para aluguel</p>
     </div>
 </div>
 
-<div class="container mt-5"> 
+<div class="container mt-5">
     <div class="row mb-5 align-items-center">
         <div class="col-md-8">
             <div class="d-flex align-items-center gap-3">
                 <div class="input-group flex-grow-1">
-                    <input type="text" class="form-control" placeholder="Filtrar veículos..." id="vehicleFilter" aria-label="Filtrar veículos" style="min-width: 300px;">
+                    <input type="text" class="form-control" placeholder="Filtrar anúncios..." id="anuncioFilter" aria-label="Filtrar anúncios" style="min-width: 300px;">
                     <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
                 </div>
-                <a href="{% url 'criar-veiculos' %}" class="btn btn-success">Adicionar Veículo</a>
+                <a href="{% url 'criar-anuncio' %}" class="btn btn-success">Adicionar Anúncio</a>
             </div>
-            <p class="text-muted mt-2">Número de veículos: {{ veiculos|length }}</p>
+            <p class="text-muted mt-2">Número de anúncios: {{ anuncios|length }}</p>
         </div>
         <div class="col-md-4"></div>
     </div>
 
-    {% if veiculos %}
+    {% if anuncios %}
         <div class="row row-cols-1 row-cols-md-4 g-1">
-            {% for veiculo in veiculos %}
+            {% for anuncio in anuncios %}
                 <div class="col">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body text-center">
-                            {% if veiculo.foto %}
-                                <img src="{% url 'foto-veiculos' veiculo.foto.name|slice:'14:'%}" alt="{{ veiculo.get_marca_display }} {{ veiculo.modelo }}" class="vehicle-img">
+                            {% if anuncio.veiculo.foto %}
+                                <img src="{% url 'foto-veiculos' anuncio.veiculo.foto.name|slice:'14:'%}" alt="{{ anuncio.veiculo.get_marca_display }} {{ anuncio.veiculo.modelo }}" class="vehicle-img">
                             {% else %}
                                 <div class="sem-imagem">Sem Imagem</div>
                             {% endif %}
-                            <h5 class="card-title">{{ veiculo.get_marca_display }} {{ veiculo.modelo }}</h5>
+                            <h5 class="card-title">{{ anuncio.veiculo.get_marca_display }} {{ anuncio.veiculo.modelo }}</h5>
                             <ul class="list-unstyled">
-                                <li><strong>Ano:</strong> {{ veiculo.ano }}</li>
-                                <li><strong>Cor:</strong> {{ veiculo.get_cor_display }}</li>
-                                <li><strong>Combustível:</strong> {{ veiculo.get_combustivel_display }}</li>
+                                <li><strong>Preço/Dia:</strong> R$ {{ anuncio.preco_diaria }}</li>
+                                <li><strong>Status:</strong> {{ anuncio.get_status_display }}</li>
+                                <li><strong>Combustível:</strong> {{ anuncio.veiculo.get_combustivel_display }}</li>
                             </ul>
                         </div>
                         <div class="card-footer bg-transparent border-0">
                             <div class="d-flex align-items-center gap-1 flex-wrap">
                                 <a href="#" class="btn btn-primary btn-lg flex-grow-1">Alugar</a>
-                                <a href="{% url 'editar-veiculos' veiculo.pk %}" class="btn btn-warning btn-sm" title="Editar">
+                                <a href="{% url 'editar-anuncio' anuncio.pk %}" class="btn btn-warning btn-sm" title="Editar">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a href="{% url 'deletar-veiculos' veiculo.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                                <a href="{% url 'deletar-anuncio' anuncio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>
@@ -332,7 +333,7 @@ Veículos Cadastrados - Aluguel de Carros
         </div>
     {% else %}
         <div class="alert alert-info" role="alert">
-            Nenhum veículo cadastrado.
+            Nenhum anúncio cadastrado.
         </div>
     {% endif %}
 </div>
@@ -341,7 +342,7 @@ Veículos Cadastrados - Aluguel de Carros
 {% block javascript_local %}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const filterInput = document.getElementById('vehicleFilter');
+    const filterInput = document.getElementById('anuncioFilter');
     const cards = document.querySelectorAll('.card');
 
     filterInput.addEventListener('input', function () {
@@ -349,19 +350,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         cards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
-            const ano = card.querySelector('.card-body ul li:nth-child(1)').textContent.toLowerCase();
-            const cor = card.querySelector('.card-body ul li:nth-child(2)').textContent.toLowerCase();
+            const preco = card.querySelector('.card-body ul li:nth-child(1)').textContent.toLowerCase();
+            const status = card.querySelector('.card-body ul li:nth-child(2)').textContent.toLowerCase();
             const combustivel = card.querySelector('.card-body ul li:nth-child(3)').textContent.toLowerCase();
 
             if (
                 title.includes(filterValue) ||
-                ano.includes(filterValue) ||
-                cor.includes(filterValue) ||
+                preco.includes(filterValue) ||
+                status.includes(filterValue) ||
                 combustivel.includes(filterValue)
             ) {
-                card.parentElement.style.display = ''; 
+                card.parentElement.style.display = '';
             } else {
-                card.parentElement.style.display = 'none'; 
+                card.parentElement.style.display = 'none';
             }
         });
     });
