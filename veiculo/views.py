@@ -7,6 +7,11 @@ from veiculo.forms import FormularioVeiculo
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
+from rest_framework.generics import ListAPIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from veiculo.serializers import SerializadorVeiculo
+from rest_framework import permissions
 
 class ListarVeiculos(LoginRequiredMixin, ListView):
     model = Veiculo
@@ -40,3 +45,10 @@ class DeletarVeiculos(LoginRequiredMixin, DeleteView):
     template_name = 'veiculo/deletar.html'
     success_url = reverse_lazy('listar-veiculos')
             
+class APIListarVeiculos(ListAPIView):
+    serializer_class = SerializadorVeiculo
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Veiculo.objects.all()
