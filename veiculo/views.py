@@ -12,6 +12,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from veiculo.serializers import SerializadorVeiculo
 from rest_framework import permissions
+from rest_framework.generics import DestroyAPIView
 
 class ListarVeiculos(LoginRequiredMixin, ListView):
     model = Veiculo
@@ -52,3 +53,12 @@ class APIListarVeiculos(ListAPIView):
 
     def get_queryset(self):
         return Veiculo.objects.all()
+
+class ApiDeletarVeiculos(DestroyAPIView):
+    Serializer_class = SerializadorVeiculo
+    authentication_classes = [TokenAuthentication]
+    permissions_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Veiculo.objects.all()
+    

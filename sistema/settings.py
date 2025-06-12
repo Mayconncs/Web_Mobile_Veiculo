@@ -70,7 +70,7 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'sistema.urls'
 
-MEDIA_URL = '/fotos/'
+MEDIA_URL = ''
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 
 TEMPLATES = [
